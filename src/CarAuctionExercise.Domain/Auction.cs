@@ -23,12 +23,12 @@ public class Auction
     public void Start()
     {
         Active = true;
-        StartDate = DateTime.Now;
+        StartDate ??= DateTime.Now;
     }
     
     public void Close()
     {
         Active = false;
-        CloseDate = DateTime.Now;
+        CloseDate ??= DateTime.Now;
     }
 }
