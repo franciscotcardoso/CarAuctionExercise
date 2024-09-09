@@ -1,0 +1,64 @@
+# Ignore build outputs
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+*.app
+*.so
+*.dylib
+*.log
+
+# Ignore Rider-specific files
+.idea/
+.idea_modules/
+.idea/*
+
+# Ignore user-specific Rider settings
+*.sln.iml
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+.scaffolding
+
+# Ignore Rider code analysis and temporary files
+.idea/workspace.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/.rider/
+
+# Ignore JetBrains Rider cache
+.idea/workspace.xml
+.idea/inspectionProfiles/Project_Default.xml
+
+# DotNet Core compiled binaries and cache
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.csproj.user
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Rider logs
+rider.log
+
+# IDE-level settings
+.idea/
+
+# Ignore test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Ignore publish output
+publish/
