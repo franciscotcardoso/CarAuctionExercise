@@ -17,6 +17,8 @@ public class VehiclesController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
     public IActionResult Add([FromBody] AddVehicle request)
     { 
         var result = _vehiclesManagementService.Add(request);
@@ -30,6 +32,7 @@ public class VehiclesController : ControllerBase
     }
     
     [HttpGet("Search")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
     public IActionResult Search(
         [FromQuery] VehicleType? vehicleType, 
         [FromQuery] string? manufacturer, 

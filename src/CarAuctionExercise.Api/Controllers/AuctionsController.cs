@@ -17,6 +17,8 @@ public class AuctionsController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
     public IActionResult Add([FromBody] AddAuction request)
     {
         var result = _auctionsManagementService.Add(request);
@@ -30,6 +32,7 @@ public class AuctionsController : ControllerBase
     }
     
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
     public IActionResult Get()
     {
         var result = _auctionsManagementService.GetAllAuctions();
@@ -38,6 +41,8 @@ public class AuctionsController : ControllerBase
     }
     
     [HttpPost("{auctionId}/start")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
     public IActionResult Start(string auctionId)
     {
         var result = _auctionsManagementService.Start(auctionId);
@@ -51,6 +56,8 @@ public class AuctionsController : ControllerBase
     }
     
     [HttpPost("{auctionId}/close")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
     public IActionResult Close(string auctionId)
     {
         var result = _auctionsManagementService.Close(auctionId);
@@ -64,6 +71,8 @@ public class AuctionsController : ControllerBase
     }
     
     [HttpPost("bid")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
     public IActionResult Bid([FromBody] AddBid request)
     {
         var result = _auctionsManagementService.Bid(request);

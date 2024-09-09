@@ -55,7 +55,7 @@ public class AuctionsManagementServiceTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Be("Invalid starting bid value.");
+        result.Errors[0].Message.Should().Be("Invalid starting bid value.");
     }
     
     [Fact]
@@ -75,7 +75,7 @@ public class AuctionsManagementServiceTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should()
+        result.Errors[0].Message.Should()
             .Be($"Auction for vehicle with license plate {addVehicle.LicensePlate} already exists.");
     }
     
@@ -98,7 +98,7 @@ public class AuctionsManagementServiceTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should()
+        result.Errors[0].Message.Should()
             .Be($"Vehicle with license plate {addAuction.LicensePlate} not found.");
     }
     
@@ -143,7 +143,7 @@ public class AuctionsManagementServiceTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Be("Auction not found.");
+        result.Errors[0].Message.Should().Be("Auction not found.");
     }
     
     [Fact]
@@ -188,7 +188,7 @@ public class AuctionsManagementServiceTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Be("Auction not found.");
+        result.Errors[0].Message.Should().Be("Auction not found.");
     }
     
     [Fact]
@@ -211,7 +211,7 @@ public class AuctionsManagementServiceTests
         // Assert
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Be("Auction already closed.");
+        result.Errors[0].Message.Should().Be("Auction already closed.");
     }
     
     [Fact]
@@ -231,7 +231,7 @@ public class AuctionsManagementServiceTests
         
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Be("Auction not started yet.");
+        result.Errors[0].Message.Should().Be("Auction not started yet.");
     }
     
     [Fact]
@@ -283,7 +283,7 @@ public class AuctionsManagementServiceTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().Be("Auction not found.");
+        result.Errors[0].Message.Should().Be("Auction not found.");
     }
     
     [Theory]
@@ -317,7 +317,7 @@ public class AuctionsManagementServiceTests
 
         // Assert
         result.IsFailed.Should().BeTrue();
-        result.Errors.First().Message.Should().BeOneOf(
+        result.Errors[0].Message.Should().BeOneOf(
             "Bid value is less or equal than the starting bid value.",
             "Bid value is less or equal than the previous bid.");
     }
