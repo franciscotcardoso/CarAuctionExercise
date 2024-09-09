@@ -1,3 +1,9 @@
-Inclusive search: vehicles for that model and year and not all the vehicles from that model and year
+# Car Auction Management
 
-Mocked Repository like we would do with an actual dependency in a DB
+![Build and Test Status](https://github.com/franciscotcardoso/CarAuctionExercise/actions/workflows/dotnet.yml/badge.svg)
+
+## Description
+
+This project is a simple car auction management system. It manages the vehicles inventory and their auction process.
+
+## Project details
