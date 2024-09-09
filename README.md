@@ -1,6 +1,6 @@
 # Car Auction Management
 
-![Build and Test Status](https://github.com/franciscotcardoso/CarAuctionExercise/actions/workflows/dotnet.yml/badge.svg)
+![Build and Test Status](https://github.com/franciscotcardoso/CarAuctionExercise/actions/workflows/build_and_test.yml/badge.svg)
 
 ## Description
 
