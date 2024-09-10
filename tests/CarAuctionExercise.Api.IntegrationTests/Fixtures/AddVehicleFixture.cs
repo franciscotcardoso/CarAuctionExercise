@@ -1,7 +1,7 @@
+namespace CarAuctionExercise.Api.IntegrationTests.Fixtures;
+
 using CarAuctionExercise.Application.DTOs.Vehicles;
 using CarAuctionExercise.Domain;
-
-namespace CarAuctionExercise.Api.IntegrationTests.Fixtures;
 
 public static class AddVehicleFixture
 {

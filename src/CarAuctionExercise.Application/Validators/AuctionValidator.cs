@@ -1,7 +1,7 @@
+namespace CarAuctionExercise.Application.Validators;
+
 using CarAuctionExercise.Application.DTOs.Auctions;
 using FluentValidation;
-
-namespace CarAuctionExercise.Application.Validators;
 
 public class AuctionValidator : AbstractValidator<AddAuction>
 {

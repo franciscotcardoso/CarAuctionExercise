@@ -10,6 +10,8 @@ public class Bid
     }
 
     public float Value { get; }
+
     public string Bidder { get; set; }
+
     public DateTime BidDateTime { get; set; }
 }

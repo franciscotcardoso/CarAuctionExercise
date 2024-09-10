@@ -1,10 +1,10 @@
+namespace CarAuctionExercise.Application.DTOs.Auctions;
+
 using CarAuctionExercise.Application.DTOs.Vehicles;
 using CarAuctionExercise.Domain;
 
-namespace CarAuctionExercise.Application.DTOs.Auctions;
-
 public record AvailableAuction(
-    String Id,
+    string Id,
     AvailableVehicle Vehicle,
     DateTime? StartDate,
     DateTime? CloseDate,

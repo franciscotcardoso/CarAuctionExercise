@@ -1,6 +1,6 @@
-using System.Linq.Expressions;
-
 namespace CarAuctionExercise.Infrastructure.Interfaces;
+
+using System.Linq.Expressions;
 
 public interface ISpecification<T>
 {

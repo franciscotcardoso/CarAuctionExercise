@@ -1,6 +1,6 @@
-using CarAuctionExercise.Application.DTOs.Bids;
-
 namespace CarAuctionExercise.Api.IntegrationTests.Fixtures;
+
+using CarAuctionExercise.Application.DTOs.Bids;
 
 public static class AddBidFixture
 {

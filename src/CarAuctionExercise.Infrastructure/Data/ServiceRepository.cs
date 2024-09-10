@@ -1,25 +1,26 @@
-using CarAuctionExercise.Infrastructure.Interfaces;
-
 namespace CarAuctionExercise.Infrastructure.Data;
 
-public class ServiceRepository<T> : IServiceRepository<T> where T : class
+using CarAuctionExercise.Infrastructure.Interfaces;
+
+public class ServiceRepository<T> : IServiceRepository<T>
+    where T : class
 {
     private readonly List<T> _dataSet = [];
-    
+
     public T? Find(ISpecification<T> specification)
     {
         var query = _dataSet.AsQueryable().Where(specification.Criteria);
 
         return query.FirstOrDefault();
     }
-    
+
     public IEnumerable<T> FindAll(ISpecification<T> specification)
     {
         var query = _dataSet.AsQueryable().Where(specification.Criteria);
 
         return query.ToList();
     }
-    
+
     public IEnumerable<T> FindAll()
     {
         var query = _dataSet.AsQueryable();

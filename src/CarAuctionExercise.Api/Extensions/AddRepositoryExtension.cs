@@ -1,8 +1,8 @@
+namespace CarAuctionExercise.Api.Extensions;
+
 using System.Diagnostics.CodeAnalysis;
 using CarAuctionExercise.Infrastructure.Data;
 using CarAuctionExercise.Infrastructure.Interfaces;
-
-namespace CarAuctionExercise.Api.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class AddRepositoryExtension

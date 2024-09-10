@@ -1,3 +1,5 @@
+namespace CarAuctionExercise.Api.IntegrationTests.Controllers;
+
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -10,8 +12,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace CarAuctionExercise.Api.IntegrationTests.Controllers;
-
 public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
@@ -22,7 +22,7 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         _factory = factory;
         IServiceRepository<Auction> auctionRepository = _factory.Services.GetRequiredService<IServiceRepository<Auction>>();
         IServiceRepository<Vehicle> vehicleRepository = _factory.Services.GetRequiredService<IServiceRepository<Vehicle>>();
-        
+
         auctionRepository.DeleteAll();
         vehicleRepository.DeleteAll();
     }
@@ -35,13 +35,13 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         var licensePlate = "12-DS-34";
         var auctionRequest = Fixtures.AddAuctionFixture.GetAddAuction(licensePlate: licensePlate);
         var vehicleRequest = Fixtures.AddVehicleFixture.GetAddVehicle(licensePlate: licensePlate);
-        
+
         await client.PostAsJsonAsync("api/v1/vehicles", vehicleRequest);
 
         // Act
         var response = await client.PostAsJsonAsync("api/v1/auctions", auctionRequest);
         var content = await response.Content.ReadFromJsonAsync<AvailableAuction>(GetJsonSerializerOptions());
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         content!.Id.Should().NotBeNull();
@@ -52,7 +52,7 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         content.Bids.Count().Should().Be(0);
         content.Vehicle.LicensePlate.Should().Be(licensePlate);
     }
-    
+
     [Fact]
     public async Task GetAuctions_ReturnsSuccessStatusCode()
     {
@@ -61,19 +61,19 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         var licensePlate = "12-DS-34";
         var auctionRequest = Fixtures.AddAuctionFixture.GetAddAuction(licensePlate: licensePlate);
         var vehicleRequest = Fixtures.AddVehicleFixture.GetAddVehicle(licensePlate: licensePlate);
-        
+
         await client.PostAsJsonAsync("api/v1/vehicles", vehicleRequest);
         await client.PostAsJsonAsync("api/v1/auctions", auctionRequest);
 
         // Act
         var response = await client.GetAsync("api/v1/auctions/");
         var content = await response.Content.ReadFromJsonAsync<IEnumerable<AvailableAuction>>(GetJsonSerializerOptions());
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         content!.Count().Should().BeGreaterThan(0);
     }
-    
+
     [Fact]
     public async Task StartAuction_ReturnsSuccessStatusCode()
     {
@@ -82,19 +82,19 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         var licensePlate = "12-DS-34";
         var auctionRequest = Fixtures.AddAuctionFixture.GetAddAuction(licensePlate: licensePlate);
         var vehicleRequest = Fixtures.AddVehicleFixture.GetAddVehicle(licensePlate: licensePlate);
-    
+
         await client.PostAsJsonAsync("api/v1/vehicles/", vehicleRequest);
         var auctionResponse = await client.PostAsJsonAsync("api/v1/auctions/", auctionRequest);
-    
+
         var auctionContent = await auctionResponse.Content.ReadFromJsonAsync<AvailableAuction>(GetJsonSerializerOptions());
-        
+
         // Act
         var response = await client.PostAsync($"api/v1/auctions/{auctionContent!.Id}/start/", null);
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
-    
+
     [Fact]
     public async Task BidAuction_ReturnsSuccessStatusCode()
     {
@@ -103,23 +103,23 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         var licensePlate = "12-DS-34";
         var auctionRequest = Fixtures.AddAuctionFixture.GetAddAuction(licensePlate: licensePlate);
         var vehicleRequest = Fixtures.AddVehicleFixture.GetAddVehicle(licensePlate: licensePlate);
-    
+
         await client.PostAsJsonAsync("api/v1/vehicles/", vehicleRequest);
         var auctionResponse = await client.PostAsJsonAsync("api/v1/auctions/", auctionRequest);
-    
+
         var auctionContent = await auctionResponse.Content.ReadFromJsonAsync<AvailableAuction>(GetJsonSerializerOptions());
         var auctionId = auctionContent!.Id;
-        
+
         var bidRequest = Fixtures.AddBidFixture.GetAddBid(auctionId);
         await client.PostAsync($"api/v1/auctions/{auctionId}/start/", null);
-        
+
         // Act
         var response = await client.PostAsJsonAsync("api/v1/auctions/bid/", bidRequest);
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
-    
+
     [Fact]
     public async Task CloseAuction_ReturnsSuccessStatusCode()
     {
@@ -128,16 +128,16 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         var licensePlate = "12-DS-34";
         var auctionRequest = Fixtures.AddAuctionFixture.GetAddAuction(licensePlate: licensePlate);
         var vehicleRequest = Fixtures.AddVehicleFixture.GetAddVehicle(licensePlate: licensePlate);
-    
+
         await client.PostAsJsonAsync("api/v1/vehicles/", vehicleRequest);
         var auctionResponse = await client.PostAsJsonAsync("api/v1/auctions/", auctionRequest);
-    
+
         var auctionContent = await auctionResponse.Content.ReadFromJsonAsync<AvailableAuction>(GetJsonSerializerOptions());
         await client.PostAsync($"api/v1/auctions/{auctionContent!.Id}/start/", null);
-        
+
         // Act
         var response = await client.PostAsync($"api/v1/auctions/{auctionContent!.Id}/close/", null);
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
@@ -147,7 +147,7 @@ public class AuctionsControllerTests : IClassFixture<WebApplicationFactory<Progr
         var jsonOptions = new JsonSerializerOptions
         {
             Converters = { new JsonStringEnumConverter() },
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
         return jsonOptions;
     }

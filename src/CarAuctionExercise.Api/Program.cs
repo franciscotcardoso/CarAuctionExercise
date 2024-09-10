@@ -36,5 +36,4 @@ await app.RunAsync();
 [ExcludeFromCodeCoverage]
 public partial class Program
 {
-    
 }
