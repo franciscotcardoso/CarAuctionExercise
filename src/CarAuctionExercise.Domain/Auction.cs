@@ -11,13 +11,19 @@ public class Auction
         StartDate = null;
         CloseDate = null;
     }
-    
+
     public String Id { get; set; } = Guid.NewGuid().ToString();
+
     public DateTime? StartDate { get; private set; }
+
     public DateTime? CloseDate { get; private set; }
+
     public float StartingBid { get; }
+
     public Vehicle Vehicle { get; }
+
     public ICollection<Bid> Bids { get; }
+
     public bool Active { get; set; }
 
     public void Start()
@@ -25,7 +31,7 @@ public class Auction
         Active = true;
         StartDate ??= DateTime.Now;
     }
-    
+
     public void Close()
     {
         Active = false;

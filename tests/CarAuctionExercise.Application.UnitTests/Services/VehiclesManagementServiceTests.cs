@@ -1,3 +1,5 @@
+namespace CarAuctionExercise.Application.UnitTests.Services;
+
 using CarAuctionExercise.Application.DTOs.Vehicles;
 using CarAuctionExercise.Application.Services;
 using CarAuctionExercise.Application.Specifications.Vehicles;
@@ -7,8 +9,6 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
-
-namespace CarAuctionExercise.Application.UnitTests.Services;
 
 public class VehiclesManagementServiceTests
 {
@@ -28,7 +28,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -44,7 +44,7 @@ public class VehiclesManagementServiceTests
             doorsNumber,
             seatsNumber,
             loadCapacity);
-        
+
         var result = vehiclesManagementService.Add(vehicle);
 
         // Assert
@@ -58,7 +58,7 @@ public class VehiclesManagementServiceTests
         addedVehicle.Type.Should().Be(vehicleType);
         addedVehicle.LicensePlate.Should().Be(licensePlate);
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan)]
     [InlineData(VehicleType.Hatchback)]
@@ -69,7 +69,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -86,7 +86,7 @@ public class VehiclesManagementServiceTests
         result.Errors[0].Message.Should()
             .Be($"Number of doors is mandatory for {VehicleType.Hatchback} or {VehicleType.Sedan}.");
     }
-    
+
     [Fact]
     public void AddVehicleWithSeatsNumberSpec_WithoutSeatsNumber_ShouldNotAddVehicle()
     {
@@ -96,7 +96,7 @@ public class VehiclesManagementServiceTests
         const int year = 2022;
         const string licensePlate = "12-CD-34";
         const VehicleType vehicleType = VehicleType.SUV;
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -113,7 +113,7 @@ public class VehiclesManagementServiceTests
         result.Errors[0].Message.Should()
             .Be($"Number of seats is mandatory for {VehicleType.SUV}.");
     }
-    
+
     [Fact]
     public void AddVehicleWithLoadCapacitySpec_WithoutLoadCapacity_ShouldNotAddVehicle()
     {
@@ -123,7 +123,7 @@ public class VehiclesManagementServiceTests
         const int year = 2022;
         const string licensePlate = "12-CD-34";
         const VehicleType vehicleType = VehicleType.Truck;
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -140,7 +140,7 @@ public class VehiclesManagementServiceTests
         result.Errors[0].Message.Should()
             .Be($"Load capacity is mandatory for {VehicleType.Truck}.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan, 5, null)]
     [InlineData(VehicleType.Hatchback, 5, null)]
@@ -155,7 +155,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -172,7 +172,7 @@ public class VehiclesManagementServiceTests
         result.Errors[0].Message.Should()
             .Be($"Load capacity is not allowed for {VehicleType.Hatchback}, {VehicleType.Sedan} or {VehicleType.SUV} vehicles.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Hatchback, 5, 6, null)]
     [InlineData(VehicleType.Truck, null, 3, 10000f)]
@@ -187,7 +187,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -204,7 +204,7 @@ public class VehiclesManagementServiceTests
         result.Errors[0].Message.Should()
             .Be($"Number of seats is not allowed for {VehicleType.Hatchback}, {VehicleType.Sedan} or {VehicleType.Truck} vehicles.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.SUV, 5, 6, null)]
     [InlineData(VehicleType.Truck, 5, null, 10000f)]
@@ -219,7 +219,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -236,7 +236,7 @@ public class VehiclesManagementServiceTests
         result.Errors[0].Message.Should()
             .Be($"Number of doors is not allowed for {VehicleType.SUV}, or {VehicleType.Truck} vehicles.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Hatchback, 10)]
     [InlineData(VehicleType.Hatchback, 0)]
@@ -249,7 +249,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -268,7 +268,7 @@ public class VehiclesManagementServiceTests
                 $"Minimum number of doors for {VehicleType.Hatchback} or {VehicleType.Sedan} is 3.",
                 $"Maximum number of doors for {VehicleType.Hatchback} or {VehicleType.Sedan} is 5.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.SUV, 10)]
     [InlineData(VehicleType.SUV, 0)]
@@ -279,7 +279,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -298,7 +298,7 @@ public class VehiclesManagementServiceTests
                 $"Minimum number of seats for a {VehicleType.SUV} is 5.",
                 $"Maximum number of seats for a {VehicleType.SUV} is 8.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Truck, 0)]
     [InlineData(VehicleType.Truck, 100000f)]
@@ -309,7 +309,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -328,7 +328,7 @@ public class VehiclesManagementServiceTests
                 $"Minimum load capacity for a {VehicleType.Truck} is 10000.",
                 $"Maximum load capacity for a {VehicleType.Truck} is 50000.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan, 3067, 5, null, null)]
     [InlineData(VehicleType.Hatchback, 3025, 5, null, null)]
@@ -361,7 +361,7 @@ public class VehiclesManagementServiceTests
             doorsNumber,
             seatsNumber,
             loadCapacity);
-        
+
         var result = vehiclesManagementService.Add(vehicle);
 
         // Assert
@@ -371,7 +371,7 @@ public class VehiclesManagementServiceTests
         result.IsFailed.Should().BeTrue();
         result.Errors[0].Message.Should().Be("Invalid vehicle year");
     }
-    
+
     [Fact]
     public void AddVehicle_FoundVehicleWithSameLicensePlate_ShouldReturnError()
     {
@@ -382,7 +382,7 @@ public class VehiclesManagementServiceTests
         const int year = 2022;
         const VehicleType type = VehicleType.Sedan;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -397,7 +397,7 @@ public class VehiclesManagementServiceTests
         result.IsSuccess.Should().BeFalse();
         result.Errors[0].Message.Should().Be($"Vehicle with License Plate {licensePlate} already exists.");
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan, 5, null, null)]
     [InlineData(VehicleType.Hatchback, 5, null, null)]
@@ -414,7 +414,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -430,19 +430,19 @@ public class VehiclesManagementServiceTests
             doorsNumber,
             seatsNumber,
             loadCapacity);
-        
+
         vehiclesManagementService.Add(vehicle);
         var result = vehiclesManagementService.Search(
-            vehicleType, 
-            null, 
-            null, 
+            vehicleType,
+            null,
+            null,
             null).ToList();
 
         // Assert
         result.Count.Should().Be(1);
         result[0].Type.Should().Be(vehicleType);
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan, 5, null, null)]
     [InlineData(VehicleType.Hatchback, 5, null, null)]
@@ -459,7 +459,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -475,19 +475,19 @@ public class VehiclesManagementServiceTests
             doorsNumber,
             seatsNumber,
             loadCapacity);
-        
+
         vehiclesManagementService.Add(vehicle);
         var result = vehiclesManagementService.Search(
-            null, 
-            manufacturer, 
-            null, 
+            null,
+            manufacturer,
+            null,
             null).ToList();
 
         // Assert
         result.Count.Should().Be(1);
         result[0].Manufacturer.Should().Be(manufacturer);
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan, 5, null, null)]
     [InlineData(VehicleType.Hatchback, 5, null, null)]
@@ -504,7 +504,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -520,19 +520,19 @@ public class VehiclesManagementServiceTests
             doorsNumber,
             seatsNumber,
             loadCapacity);
-        
+
         vehiclesManagementService.Add(vehicle);
         var result = vehiclesManagementService.Search(
-            null, 
-            null, 
-            model, 
+            null,
+            null,
+            model,
             null).ToList();
 
         // Assert
         result.Count.Should().Be(1);
         result[0].Model.Should().Be(model);
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan, 5, null, null)]
     [InlineData(VehicleType.Hatchback, 5, null, null)]
@@ -549,7 +549,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -565,19 +565,19 @@ public class VehiclesManagementServiceTests
             doorsNumber,
             seatsNumber,
             loadCapacity);
-        
+
         vehiclesManagementService.Add(vehicle);
         var result = vehiclesManagementService.Search(
-            null, 
-            null, 
-            null, 
+            null,
+            null,
+            null,
             year).ToList();
 
         // Assert
         result.Count.Should().Be(1);
         result[0].Year.Should().Be(year);
     }
-    
+
     [Theory]
     [InlineData(VehicleType.Sedan, 5, null, null)]
     [InlineData(VehicleType.Hatchback, 5, null, null)]
@@ -594,7 +594,7 @@ public class VehiclesManagementServiceTests
         const string model = "Model";
         const int year = 2022;
         const string licensePlate = "12-CD-34";
-        
+
         var vehiclesRepository = new ServiceRepository<Vehicle>();
         var mockLogger = new Mock<ILogger<VehiclesManagementService>>();
 
@@ -610,12 +610,12 @@ public class VehiclesManagementServiceTests
             doorsNumber,
             seatsNumber,
             loadCapacity);
-        
+
         vehiclesManagementService.Add(vehicle);
         var result = vehiclesManagementService.Search(
-            vehicleType, 
-            manufacturer, 
-            model, 
+            vehicleType,
+            manufacturer,
+            model,
             year).ToList();
 
         // Assert

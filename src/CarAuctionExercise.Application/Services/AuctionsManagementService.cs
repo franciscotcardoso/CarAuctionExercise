@@ -1,3 +1,5 @@
+namespace CarAuctionExercise.Application.Services;
+
 using CarAuctionExercise.Application.DTOs.Auctions;
 using CarAuctionExercise.Application.DTOs.Bids;
 using CarAuctionExercise.Application.Interfaces;
@@ -9,8 +11,6 @@ using CarAuctionExercise.Domain;
 using CarAuctionExercise.Infrastructure.Interfaces;
 using FluentResults;
 using Microsoft.Extensions.Logging;
-
-namespace CarAuctionExercise.Application.Services;
 
 public class AuctionsManagementService : IAuctionsManagementService
 {
@@ -32,7 +32,7 @@ public class AuctionsManagementService : IAuctionsManagementService
     {
         var auctionValidator = new AuctionValidator();
         var result = auctionValidator.Validate(auction);
-        
+
         if (!result.IsValid)
         {
             var errors = result.Errors
@@ -41,7 +41,7 @@ public class AuctionsManagementService : IAuctionsManagementService
 
             return Result.Fail(errors);
         }
-        
+
         var auctionSpec = new FindAuctionByVehicleLicensePlate(auction.LicensePlate);
         var auctionForVehicle = _auctionRepository.Find(auctionSpec);
 
@@ -53,15 +53,18 @@ public class AuctionsManagementService : IAuctionsManagementService
         var vehicleSpec = new FindVehicleByLicensePlateSpec(auction.LicensePlate);
         var vehicle = _vehicleRepository.Find(vehicleSpec);
 
-        if (vehicle is null) return Result.Fail($"Vehicle with license plate {auction.LicensePlate} not found.");
-        
+        if (vehicle is null)
+        {
+            return Result.Fail($"Vehicle with license plate {auction.LicensePlate} not found.");
+        }
+
         var newAuction = new Auction(auction.StartingBid, vehicle);
         var createdAuction = _auctionRepository.Add(newAuction);
-        
+
         _logger.LogInformation(
             "Auction for vehicle with license plate {LicensePlate} created.",
             createdAuction.Vehicle.LicensePlate);
-        
+
         return Result.Ok(createdAuction.MapToAvailableAuction());
     }
 
@@ -75,16 +78,23 @@ public class AuctionsManagementService : IAuctionsManagementService
     {
         var auction = FindAuction(auctionId);
 
-        if (auction is null) return Result.Fail("Auction not found.");
-        if (auction.CloseDate is not null) return Result.Fail("Auction already closed.");
-        
+        if (auction is null)
+        {
+            return Result.Fail("Auction not found.");
+        }
+
+        if (auction.CloseDate is not null)
+        {
+            return Result.Fail("Auction already closed.");
+        }
+
         auction.Start();
-        
+
         _logger.LogInformation(
             "Auction {Auction} for vehicle with license plate {LicensePlate} started.",
             auction.Id,
             auction.Vehicle.LicensePlate);
-        
+
         return Result.Ok();
     }
 
@@ -92,16 +102,23 @@ public class AuctionsManagementService : IAuctionsManagementService
     {
         var auction = FindAuction(auctionId);
 
-        if (auction is null) return Result.Fail("Auction not found.");
-        if (auction.StartDate is null) return Result.Fail("Auction not started yet.");
-        
+        if (auction is null)
+        {
+            return Result.Fail("Auction not found.");
+        }
+
+        if (auction.StartDate is null)
+        {
+            return Result.Fail("Auction not started yet.");
+        }
+
         auction.Close();
-        
+
         _logger.LogInformation(
             "Auction {Auction} for vehicle with license plate {LicensePlate} closed.",
             auction.Id,
             auction.Vehicle.LicensePlate);
-        
+
         return Result.Ok();
     }
 
@@ -110,13 +127,16 @@ public class AuctionsManagementService : IAuctionsManagementService
         var spec = new FindAuctionByIdSpec(bid.AuctionId);
         var auction = _auctionRepository.Find(spec);
 
-        if (auction is null) return Result.Fail("Auction not found.");
-        
+        if (auction is null)
+        {
+            return Result.Fail("Auction not found.");
+        }
+
         if (!auction.Active)
         {
             return Result.Fail("Auction not active.");
         }
-            
+
         if (bid.Value <= auction.StartingBid)
         {
             return Result.Fail("Bid value is less or equal than the starting bid value.");
@@ -129,15 +149,15 @@ public class AuctionsManagementService : IAuctionsManagementService
                 return Result.Fail("Bid value is less or equal than the previous bid.");
             }
         }
-            
+
         auction.Bids.Add(new Bid(bid.Value, bid.Bidder, DateTime.Now));
-        
+
         _logger.LogInformation(
             "Bid with value {Value} for auction {Auction} with vehicle with license plate {LicensePlate}.",
             bid.Value,
             auction.Id,
             auction.Vehicle.LicensePlate);
-        
+
         return Result.Ok();
     }
 

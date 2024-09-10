@@ -1,9 +1,9 @@
+namespace CarAuctionExercise.Api.Controllers;
+
 using CarAuctionExercise.Application.DTOs.Auctions;
 using CarAuctionExercise.Application.DTOs.Bids;
 using CarAuctionExercise.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
-namespace CarAuctionExercise.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -25,12 +25,12 @@ public class AuctionsController : ControllerBase
 
         if (result.IsSuccess)
         {
-            return Created("", result.Value);
+            return Created(string.Empty, result.Value);
         }
 
         return BadRequest(new { Message = result.Errors.Select(e => e.Message).ToList()});
     }
-    
+
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
     public IActionResult Get()
@@ -39,7 +39,7 @@ public class AuctionsController : ControllerBase
 
         return Ok(result);
     }
-    
+
     [HttpPost("{auctionId}/start")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
@@ -49,12 +49,12 @@ public class AuctionsController : ControllerBase
 
         if (result.IsSuccess)
         {
-            return Ok(new { Message = "Auction started successfully."});
+            return Ok(new { Message = "Auction started successfully." });
         }
 
-        return BadRequest(new { Message = result.Errors.Select(e => e.Message).ToList()});
+        return BadRequest(new { Message = result.Errors.Select(e => e.Message).ToList() });
     }
-    
+
     [HttpPost("{auctionId}/close")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
@@ -69,7 +69,7 @@ public class AuctionsController : ControllerBase
 
         return BadRequest(new { Message = result.Errors.Select(e => e.Message).ToList()});
     }
-    
+
     [HttpPost("bid")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(object))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(object))]
@@ -79,9 +79,9 @@ public class AuctionsController : ControllerBase
 
         if (result.IsSuccess)
         {
-            return Ok(new { Message = "Bid placed successfully"});
+            return Ok(new { Message = "Bid placed successfully" });
         }
 
-        return BadRequest(new { Message = result.Errors.Select(e => e.Message).ToList()});
+        return BadRequest(new { Message = result.Errors.Select(e => e.Message).ToList() });
     }
 }

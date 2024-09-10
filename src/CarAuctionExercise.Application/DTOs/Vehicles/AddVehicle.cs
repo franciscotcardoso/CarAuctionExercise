@@ -1,6 +1,6 @@
-using CarAuctionExercise.Domain;
-
 namespace CarAuctionExercise.Application.DTOs.Vehicles;
+
+using CarAuctionExercise.Domain;
 
 public record AddVehicle(
     string Manufacturer,
