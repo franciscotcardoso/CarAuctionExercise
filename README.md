@@ -24,7 +24,7 @@ but in a real-world scenario, this layer would connect to a database or external
 
 There are two main domain entities: Vehicles and Auctions. Each auction can have a vehicle and multiple bids for it.
 The domain entities are managed by two main services in the Application layer. The entities are stored in-memory and
-managed used the repository and the specification patterns.
+managed using the repository and the specification patterns.
 
 The communication between the API layer and Application layer is done by specific DTOs that are mapped to the domain entities.
 The actions over the domain entities are mainly validated by rules using `FluentValidation` in the Application layer: 
@@ -59,7 +59,7 @@ the application layer, and the domain layer, ensuring that the components work t
 
 ## Docker
 
-The project can be run using Docker. To build and start the application, simply run `docker-compose up`.
+The project can be run with Docker. To build and start the application, simply run `docker-compose up`.
 
 ## Build and test pipeline
 
@@ -67,6 +67,6 @@ The GitHub repository has a build and test pipeline that runs every time a new p
 
 ## Insomnia collection / Swagger
 
-There is (at the project root) an Insomnia collection names `CarAucationCollectionInsomnia.json` that has all the available endpoints.
+There is (at the project root) an Insomnia collection named `CarAucationCollectionInsomnia.json` that has all the available endpoints.
 The swagger is also available in the project.
 
